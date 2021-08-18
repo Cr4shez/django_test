@@ -1,28 +1,42 @@
 from django.db import models
 
 
-
 class Device(models.Model):
     """Generic warning device - Siren or a Megaphone"""
 
     SIREN = "SR"
     MEGAPHONE = "MG"
-    TYPE_CHOICES = [(SIREN, "Сирена"),
-                    MEGAPHONE, "Громкоговоритель"]
+    TYPE_CHOICES = [(SIREN, 'Сирена'),
+                    (MEGAPHONE, 'Громкоговоритель')]
+
+    class Meta:
+        verbose_name_plural = "устройства оповещения"
+        verbose_name = "устройство"
 
     name = models.CharField(
-        verbose_name='Название', max_length=200)
+        verbose_name='Название',
+        max_length=200
+    )
     type = models.CharField(
         verbose_name='Тип устройства',
         max_length=2,
         choices=TYPE_CHOICES,
-        default=SIREN)
+        default=SIREN
+    )
     address = models.CharField(
-        verbose_name='Адрес размещения', max_length=200)
+        verbose_name='Адрес размещения',
+        max_length=200
+    )
     latitude = models.FloatField(
-        verbose_name='Широта')
+        verbose_name='Широта'
+    )
     # DecimalField для указания шести знаков после запятой?
     longitude = models.FloatField(
-        verbose_name='Долгота')
+        verbose_name='Долгота'
+    )
     sound_reaching_radius = models.PositiveIntegerField(
-        verbose_name="Радиус зоны звукопокрытия (в метрах)")
+        verbose_name='Радиус зоны звукопокрытия (в метрах)'
+    )
+
+    def __str__(self):
+        return str(self.name)
