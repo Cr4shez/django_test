@@ -30,7 +30,6 @@ class DeviceAdmin(admin.ModelAdmin):
     """Класс для кастомизации управления устройствами оповещения."""
 
     list_display = ('name', 'type', 'sound_reaching_radius', 'address')
-    filter_horizontal = ()
     list_filter = ('type', RadiusListFilter,)
     search_fields = ('name', 'address')
 
