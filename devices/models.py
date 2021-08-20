@@ -54,13 +54,6 @@ class Device(models.Model):
         verbose_name='Радиус зоны звукопокрытия (в метрах)'
     )
 
-    def validate_address(self):
-        if value % 2 != 0:
-            raise ValidationError(
-                _('%(value)s is not an even number'),
-                params={'value': value},
-            )
-
     def __str__(self):
         """Метод для отображения информации об экземпляре.
 
