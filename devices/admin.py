@@ -32,6 +32,8 @@ class DeviceAdmin(admin.ModelAdmin):
     list_display = ('name', 'type', 'sound_reaching_radius', 'address')
     list_filter = ('type', RadiusListFilter,)
     search_fields = ('name', 'address')
+    list_per_page = 10
+    list_max_show_all = 100
 
 
 admin.site.site_header = 'Справочник устройств оповещения'

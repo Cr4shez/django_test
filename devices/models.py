@@ -1,6 +1,6 @@
 """Модуль для определения используемых моделей."""
 from django.db import models
-
+from django.core.validators import RegexValidator
 
 class Device(models.Model):
     """Модель устройства оповещения.
@@ -36,7 +36,12 @@ class Device(models.Model):
     )
     address = models.CharField(
         verbose_name='Адрес размещения',
-        max_length=200
+        max_length=200,
+        validators=[RegexValidator(
+            regex=r'([A-Za-zА-Яа-яЁё.]+, ?)+([\d/])+',
+            message='Адрес должен начинаться с буквы латинского или кириллического алфавита!',
+            code=9999
+        )]
     )
     # или DecimalField для указания шести знаков после запятой?
     latitude = models.FloatField(
@@ -48,6 +53,13 @@ class Device(models.Model):
     sound_reaching_radius = models.PositiveIntegerField(
         verbose_name='Радиус зоны звукопокрытия (в метрах)'
     )
+
+    def validate_address(self):
+        if value % 2 != 0:
+            raise ValidationError(
+                _('%(value)s is not an even number'),
+                params={'value': value},
+            )
 
     def __str__(self):
         """Метод для отображения информации об экземпляре.
